@@ -1,6 +1,6 @@
 ---
 name: datalens-enterprise-dev
-description: Develop and test DataLens Enterprise locally from component source checkouts. Ask for the developer's UI, US, or backend stream, then guide role-specific setup, hot reload, production image builds, local Compose integration and tests, including Auth, Meta Manager and Snapter dependencies. Use for local Enterprise development or testing unreleased component changes, not installing a customer distribution or deploying shared environments.
+description: Develop and test DataLens Enterprise locally from component source checkouts. Guide UI, US or backend work, local container builds and Compose integration, including file connectors, exports, subscriptions, Temporal, Auth, Meta Manager and Snapter. Use for local Enterprise development or testing unreleased component changes, not installing a customer distribution or deploying shared environments.
 license: Apache-2.0
 metadata:
   domain: datalens
@@ -28,10 +28,15 @@ shared CI, publishing, production deployment or destructive database operations.
 |---|---|
 | UI: React, charts/editor, server proxy, public API, Enterprise UI | [references/ui.md](references/ui.md) |
 | US: object persistence, revisions, ACL/DLS, migrations, storage APIs | [references/us.md](references/us.md) |
-| Backend: connectors, datasets, formulas, query execution, control/data API | [references/backend.md](references/backend.md) |
-| Login/tokens, exports/Temporal, screenshots | [references/supporting-services.md](references/supporting-services.md) |
+| Backend: connectors, datasets, formulas, secure embeds, file uploads, chart exports, subscriptions, usage tracking; all EAS release targets | [references/backend.md](references/backend.md) |
+| Temporal workflows, scheduled dashboard emails, workbook export/import, stuck jobs | [references/temporal.md](references/temporal.md), plus the owning stream |
+| Login/tokens, Meta Manager source/build, screenshots | [references/supporting-services.md](references/supporting-services.md) |
 
 All streams first use [references/local-stack.md](references/local-stack.md).
+For backend work, identify the affected application from the EAS release matrix
+before choosing a build. For asynchronous work, identify its producer, worker,
+queue/namespace and result store; an API-only build may leave the changed code
+out of the executing worker.
 Do not load unrelated stream references just because their repositories exist.
 For customer installation from an archive use `datalens-onprem-install` instead;
 its K3s workflow does not provide source checkouts or a development toolchain.

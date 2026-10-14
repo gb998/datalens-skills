@@ -41,9 +41,14 @@ images or the Python backend. Meta Manager's Compose dev service exists, but
 requires an explicit supported Compose command; `--export` starts its pinned image.
 Check the current script before assuming a flag was added later.
 
-Common optional flags: `--files` for file connectors, `--export` for workbook
-export, `--subscriptions --mailpit` for local mail testing, `--ldap`/`--oidc`
-for identity-provider testing. Respect the current overlays and feature wiring.
+Common optional flags: `--files` for file connectors, `--sec-embeds` for secure
+embeds, `--background-exports` (plus `--xlsx-background-exports`) for chart data,
+`--export` for workbook transfer, `--subscriptions --mailpit` for local mail
+testing, and `--ldap`/`--oidc` for identity-provider testing. Backend owns the full
+[EAS application matrix](backend.md#select-the-released-application); choose its
+feature group before building. Workbook jobs and subscriptions share Temporal,
+with different workers/queues; read [temporal.md](temporal.md) when using either.
+Respect the current overlays and feature wiring.
 `--snapter` also starts its browser dependency and S3; `--nginx` provides the
 screenshot reverse-proxy route. Do not enable unrelated services by default.
 
@@ -58,7 +63,15 @@ Inspected defaults; check actual mappings before using them:
 | Auth | 8088 | `auth:8080` |
 | Control API | 8010 | `control-api:8080` |
 | Data API | 8020 | `data-api:8080` |
+| Secure-embeds Data API | 8050 | `data-api-sec-embeds:8080` |
+| File Uploader API | 8081 | `file-uploader-api:8080` |
+| Export Data API / Export API | 8030 / 8040 | `export-data-api:8080` / `export-api:8080` |
+| Subscription API | 8060 | `subscription-api:8080` |
 | Meta Manager | 3050 | `meta-manager:8080` |
+| UI API for workbook transfer | 3040 | `ui-api:8080` |
+| Temporal gRPC | Not published by base Compose | `temporal:7233` |
+| Temporal UI (`--temporal-ui`) | 8233 | `temporal-ui:8080` |
+| Mailpit UI / SMTP (`--mailpit`) | 8025 / 1025 | `mailpit:8025` / `mailpit:1025` |
 | Snapter | 8090 | `snapter:8080` |
 | Playwright browser | See Compose | `snapter-pw:3000` |
 
@@ -68,7 +81,8 @@ For a host-run service, use the bootstrap's supported `--no-ui`, `--no-us`,
 `--no-auth` endpoint wiring and verify host reachability on that OS.
 
 US main/DLS, AUX, Auth and Meta Manager may share a PostgreSQL container but use
-different databases/schemas. Keep US master tokens, Auth signing/public keys
+different databases/schemas. Temporal also has separate history and visibility
+databases. Keep US master tokens, Auth signing/public keys
 and backend credential-encryption keys consistent. Changing keys can invalidate
 sessions or make stored connection credentials unreadable.
 

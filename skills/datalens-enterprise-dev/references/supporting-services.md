@@ -34,6 +34,11 @@ when affected. Propagate signing/public keys to UI/US/backend; never log tokens.
 
 ## Meta Manager
 
+Meta Manager runs HTTP plus Node Temporal workers for workbook export/import
+and expired-job cleanup in one process. Read [temporal.md](temporal.md) for
+namespaces/queues, dependencies, local overrides and job diagnostics. Backend
+chart-data exports use a separate Redis/ARQ pipeline.
+
 Standalone Meta Manager dev requires protected
 `projects/opensource/.env.development` following its tracked templates/setup;
 setup creates `.env` if absent. Configure explicitly local endpoints and DSNs.
@@ -62,6 +67,10 @@ Validate export/import content and job completion with US/UI API/Temporal,
 including the required database and workflow dependencies.
 
 ## Snapter
+
+Subscriptions use Snapter to render delivery artifacts; use the
+[subscription workflow](temporal.md#change-and-test-subscriptions) when testing
+scheduled dashboard/report mail so the Notify/SMTP and Temporal path is included.
 
 Snapter uses root npm and **`en:*`** Enterprise commands, unlike UI `ent:*`.
 Use `npm ci --no-audit --no-fund`. `npm run en:dev` prepares the Enterprise
