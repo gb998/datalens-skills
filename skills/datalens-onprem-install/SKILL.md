@@ -20,6 +20,17 @@ metadata:
 A conversational skill for a DevOps engineer. Scope: a single-node K3s with embedded
 PostgreSQL/ClickHouse/Redis/MinIO (`init.sh --k3s-install`).
 
+## Installation or source development?
+
+At the beginning, establish whether the requester is installing a supplied
+customer distribution or developing Enterprise from component source.
+For source changes, local hot reload, or building unreleased UI/US/backend images,
+use [datalens-enterprise-dev](../datalens-enterprise-dev/SKILL.md) and ask for the
+developer's UI, US or backend stream first. An installed K3s distribution alone
+does not provide those source checkouts or the development build environment.
+For customer installation, continue below and distinguish agent execution from
+instructions the engineer runs. Reuse the chosen mode when resuming.
+
 ## Principles
 
 - Every stage ends with a checkpoint: a short summary of what was done plus the engineer's
